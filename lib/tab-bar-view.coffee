@@ -296,12 +296,14 @@ class TabBarView extends View
     tabBar = @getTabBar(event.target)
     sortableObjects = tabBar.find(".sortable")
 
+    top = sortableObjects.eq(Math.max(0, newDropTargetIndex - 1)).offset().top
+
     if newDropTargetIndex < sortableObjects.length
       element = sortableObjects.eq(newDropTargetIndex).addClass 'is-drop-target'
-      @getPlaceholder().insertBefore(element)
+      @getPlaceholder().css("top", top).insertBefore(element)
     else
       element = sortableObjects.eq(newDropTargetIndex - 1).addClass 'drop-target-is-after'
-      @getPlaceholder().insertAfter(element)
+      @getPlaceholder().css("top", top).insertAfter(element)
 
   onDropOnOtherWindow: (fromPaneId, fromItemIndex) =>
     if @pane.id is fromPaneId
